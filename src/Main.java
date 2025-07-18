@@ -16,7 +16,8 @@ public class Main {
         Producto p1 = new Producto("Galleta", "Chocolate", 5.90);
 
 
-        //Menú principal
+        //Menú principal - Definición para poder generar las funciones en los sub-menus
+
         /*int opcion;
 
         do{
