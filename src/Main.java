@@ -21,14 +21,23 @@ public class Main {
         /*int opcion;
 
         do{
+            System.out.println("\n Menú de opciones");
+            System.out.println("1. Gestión de Clientes");
+            System.out.println("2. Gestión de Producto");
+            System.out.println("3. Realizar una Venta");
+            System.out.println("4. Mostrar ventas");
+            System.out.println("0. Salir");
+
+
             opcion = sc.nextInt();
+            sc.nextLine();
 
             switch (opcion){
-                case 1 -> menuGestionClientes();
-                case 2 -> menuGestionProductos();
-                case 3 -> realizarNuevaVenta();
-                case 4 -> mostrarMenuVentas();
-                case 5 -> System.out.println("Gracias por usar la app!");
+                case 1 -> //menuGestionClientes();
+                case 2 -> //menuGestionProductos();
+                case 3 -> //realizarNuevaVenta();
+                case 4 -> //mostrarMenuVentas();
+                case 0 -> System.out.println("Gracias por usar la app!");
                 default -> System.out.println("Opción no válida.");
             }
         }while (opcion !=5);*/
