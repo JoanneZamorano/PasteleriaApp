@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -28,7 +29,7 @@ public class Main {
 
             switch (opcion){
                 case 1 -> menuGestionClientes(sc);
-                //case 2 -> menuGestionProductos(sc);
+                case 2 -> menuGestionProductos(sc);
                 //case 3 -> realizarNuevaVenta(sc);
                 //case 4 -> mostrarMenuVentas();
 
@@ -84,7 +85,44 @@ public class Main {
     }
 
     //---- SUBMENU 2: MENU GESTIÓN PRODUCTOS
+    static void menuGestionProductos(Scanner sc){
+        int opcion;
 
+        do{
+            System.out.println(" --SUBMENU 1: GESTIÓN DE PRODUCTOS-- ");
+            System.out.println("1. ALTA Productos");
+            System.out.println("2. LISTAR Productos");
+            System.out.println("3. BÚSQUEDA por Sabor");
+            System.out.println("0. Salir");
+
+            opcion = sc.nextInt();
+            sc.nextLine();
+
+            switch (opcion){
+                case 1 -> Producto.altaProducto();//ALTA PRODUCTO
+                case 2 -> Producto.listarProducto(); //LISTAR PRODUCTO
+                case 3 -> { //BUSCAR PRODUCTO POR SABOR
+                    System.out.println("-- 1.2 GESTIÓN PRODUCTOS | BUSCAR PRODUCTO POR SABOR --");
+                    System.out.print("Introduce el sabor del producto a buscar: ");
+                    String saborBuscado = sc.nextLine();
+
+                    List<Producto> productosEncontrados = Producto.buscarProductoPorSabor(saborBuscado);
+
+                    if (!productosEncontrados.isEmpty()) {
+                        System.out.println("Productos con el sabor " + saborBuscado + ":");
+                        for (Producto p : productosEncontrados) {
+                            System.out.println("* * * Producto: " + p.getTipoBollo() + "\t\tPrecio: " + p.getPrecio());
+                        }
+                    } else {
+                        System.out.println("No se encontró ningún producto con el sabor: " + saborBuscado);
+                    }
+                }
+
+                case 0 -> System.out.println("Volviendo menú principal.\n");
+                default -> System.out.println("Opción no válida.");
+            }
+        }while(opcion != 0);
+    }
 
     }
 

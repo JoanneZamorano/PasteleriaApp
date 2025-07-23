@@ -75,7 +75,9 @@ public class Cliente {
         String telefono = sc.nextLine();
         System.out.print("Email: ");
         String email = sc.nextLine();
+
         Main.clientes.add(new Cliente(nombre, dni, telefono, email));
+        sc.nextLine();
         System.out.println("Cliente " + nombre + " añadido correctamente.");
     }
     //----2 BAJA CLIENTE---------------------------------------------------------------------------
