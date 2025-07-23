@@ -11,7 +11,7 @@ public class Venta {
 
 
     //Constructor
-    public Venta(Cliente cliente, ArrayList<Producto> lineasDeVenta, String fecha) {
+    public Venta(Cliente cliente, String fecha) {
         this.cliente = cliente;
         this.lineasDeVenta = new ArrayList<>();
         this.fecha = fecha;
@@ -27,6 +27,8 @@ public class Venta {
     public String getFecha() {
         return fecha;
     }
+
+
 
     //Métodos
     public void añadirProducto(Producto p){

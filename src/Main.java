@@ -1,60 +1,51 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+    static Scanner sc = new Scanner(System.in);
+
+    static ArrayList<Cliente> clientes = new ArrayList<>();
+    static ArrayList<Producto> productos = new ArrayList<>();
+    static ArrayList<Venta> ventas = new ArrayList<>();
+
     public static void main(String[] args) {
-        /*
-        * clientes: alta, baja, modificación, búsqueda por DNI, listado
-        * Producto: alta bollos disponibles, listado catálogo, búsqueda por tipo
-        * venta: crear venta (selecionar cliente, añadir 1 o + bollos, mostrar ventas realizadas, mostrar ventas por clientes, mostrar importe total de cada venta)
-        * */
+        //Cliente c1 = new Cliente("Joa", "123456789A", "666555444", "joa@joa.com");
+        //Producto p1 = new Producto("Galleta", "Chocolate", 5.90);
         Scanner sc = new Scanner(System.in);
 
-
-
-        Cliente c1 = new Cliente("Joa", "123456789A", "666555444", "joa@joa.com");
-
-        Producto p1 = new Producto("Galleta", "Chocolate", 5.90);
-
-
         //---- MENU PRINCIPAL - Definición para poder generar las funciones en los sub-menus
-
-        /*int opcion;
+        int opcion;
 
         do{
-            System.out.println("\n Menú de opciones");
+            System.out.println("--MENÚ PASTELERÍA--");
             System.out.println("1. Gestión de Clientes");
             System.out.println("2. Gestión de Producto");
             System.out.println("3. Realizar una Venta");
             System.out.println("4. Mostrar ventas");
             System.out.println("0. Salir");
 
-
-            opcion = sc.nextInt();
-            sc.nextLine();
+            opcion = sc.nextInt(); sc.nextLine();
 
             switch (opcion){
-                case 1 -> menuGestionClientes();
-                case 2 -> //menuGestionProductos();
-                case 3 -> //realizarNuevaVenta();
-                case 4 -> //mostrarMenuVentas();
+                case 1 -> menuGestionClientes(sc);
+                //case 2 -> menuGestionProductos(sc);
+                //case 3 -> realizarNuevaVenta(sc);
+                //case 4 -> mostrarMenuVentas();
+
                 case 0 -> System.out.println("Gracias por usar la app!");
+
                 default -> System.out.println("Opción no válida.");
-            }
-        }while (opcion !=0);*/
-
-
-
-
+             }
+        }while(opcion != 0);
     }
 
-    //---- SUBMENU 1: MENU GESTIÓN CLIENTES
-    /*public static void menuGestionClientes(){
-        Scanner sc = new Scanner(System.in);
 
+    //---- SUBMENU 1: MENU GESTIÓN CLIENTES
+     static void menuGestionClientes(Scanner sc){
         int opcion;
 
         do{
-            System.out.println("\n --SUBMENU 1: GESTIÓN DE CLIENTES-- ");
+            System.out.println(" --SUBMENU 1: GESTIÓN DE CLIENTES-- ");
             System.out.println("1. ALTA Clientes");
             System.out.println("2. BAJA Clientes");
             System.out.println("3. MODIFICACIÓN Clientes");
@@ -62,56 +53,38 @@ public class Main {
             System.out.println("5. LISTAR todos los Clientes");
             System.out.println("0. Salir");
 
-            opcion = sc.nextInt();
-            sc.nextLine();
+            opcion = sc.nextInt(); sc.nextLine();
 
             switch (opcion){
-                case 1 -> altaCliente();
-                case 2 -> bajaCliente();
-                case 3 -> modificarCliente();
-                case 4 -> buscarClientePorDNI();
-                case 5 -> listarTodosClientes();
-                case 0 -> System.out.println("Volviendo menú principal.");
+                case 1 -> Cliente.altaCliente();//ALTA CLIENTE
+                case 2 -> Cliente.bajaCliente(); //BAJA CLIENTE
+                case 3 -> Cliente.modificarCliente();
+                case 4 -> { //BUSCAR CLIENTE POR DNI
+                    System.out.print("Introduce el DNI del cliente a buscar: ");
+                    String dniBuscado = sc.nextLine();
+                    Cliente clienteEncontrado = Cliente.buscarClientePorDNI(dniBuscado);
+
+                    if (clienteEncontrado != null) {
+                        System.out.println("\n--- Cliente Encontrado ---");
+                        System.out.println("Nombre: " + clienteEncontrado.getNombre());
+                        System.out.println("DNI: " + clienteEncontrado.getDni());
+                        System.out.println("Teléfono: " + clienteEncontrado.getTelefono());
+                        System.out.println("Email: " + clienteEncontrado.getEmail());
+                        System.out.println("--------------------------\n");
+                    } else {
+                        System.out.println("No se encontró ningún cliente con el DNI: " + dniBuscado + "\n");
+                    }
+                }
+                case 5 -> Cliente.listarClientes();//LISTAR TODOS LOS CLIENTES
+
+                case 0 -> System.out.println("Volviendo menú principal.\n");
                 default -> System.out.println("Opción no válida.");
-
-        }while (opcion !=0);
-
-    }*/
-        public static void altaCliente(){
-            Scanner sc = new Scanner(System.in);
-
-            System.out.println("-- 1.1 GESTIÓN CLIENTES | ALTA CLIENTE--");
-            System.out.println("Introduce los siguientes datos:");
-
-            System.out.print("Nombre: ");
-            String nombre = sc.nextLine();
-
-            System.out.print("DNI: "); //este será el ID para comprobar si hay otro cliente igual -> hacer if equals dni
-            String dni = sc.nextLine();
-                //if
-
-            System.out.print("Teléfono: ");
-            String telefono = sc.nextLine();
-
-            System.out.print("Email: ");
-            String email = sc.nextLine();
-
-            clientes.add(new Cliente(nombre, dni, telefono, email));
-            System.out.println("Cliente " + nombre + "añadido correctamente.");
-        }
-
-
+                }
+        }while(opcion != 0);
+    }
 
     //---- SUBMENU 2: MENU GESTIÓN PRODUCTOS
 
 
+    }
 
-    //---- SUBMENU 3: REALIZAR NUEVA VENTA
-
-
-
-    //---- SUBMENU 4: MENU MOSTRAR VENTAS
-
-
-
-}
