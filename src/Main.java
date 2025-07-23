@@ -18,7 +18,7 @@ public class Main {
         int opcion;
 
         do{
-            System.out.println("--MENÚ PASTELERÍA--");
+            System.out.println("\n- - - - MENÚ PASTELERÍA - - - - ");
             System.out.println("1. Gestión de Clientes");
             System.out.println("2. Gestión de Producto");
             System.out.println("3. Realizar una Venta");
@@ -46,7 +46,7 @@ public class Main {
         int opcion;
 
         do{
-            System.out.println(" --SUBMENU 1: GESTIÓN DE CLIENTES-- ");
+            System.out.println("\n- - - - 1: GESTIÓN DE CLIENTES - - - - ");
             System.out.println("1. ALTA Clientes");
             System.out.println("2. BAJA Clientes");
             System.out.println("3. MODIFICACIÓN Clientes");
@@ -60,22 +60,7 @@ public class Main {
                 case 1 -> Cliente.altaCliente();//ALTA CLIENTE
                 case 2 -> Cliente.bajaCliente(); //BAJA CLIENTE
                 case 3 -> Cliente.modificarCliente();
-                case 4 -> { //BUSCAR CLIENTE POR DNI
-                    System.out.print("Introduce el DNI del cliente a buscar: ");
-                    String dniBuscado = sc.nextLine();
-                    Cliente clienteEncontrado = Cliente.buscarClientePorDNI(dniBuscado);
-
-                    if (clienteEncontrado != null) {
-                        System.out.println("\n--- Cliente Encontrado ---");
-                        System.out.println("Nombre: " + clienteEncontrado.getNombre());
-                        System.out.println("DNI: " + clienteEncontrado.getDni());
-                        System.out.println("Teléfono: " + clienteEncontrado.getTelefono());
-                        System.out.println("Email: " + clienteEncontrado.getEmail());
-                        System.out.println("--------------------------\n");
-                    } else {
-                        System.out.println("No se encontró ningún cliente con el DNI: " + dniBuscado + "\n");
-                    }
-                }
+                case 4 -> Cliente.mostrarClientePorDNI(); //BUSCAR CLIENTE POR DNI
                 case 5 -> Cliente.listarClientes();//LISTAR TODOS LOS CLIENTES
 
                 case 0 -> System.out.println("Volviendo menú principal.\n");
@@ -89,7 +74,7 @@ public class Main {
         int opcion;
 
         do{
-            System.out.println(" --SUBMENU 1: GESTIÓN DE PRODUCTOS-- ");
+            System.out.println("\n- - - - 2. GESTIÓN DE PRODUCTOS - - - - ");
             System.out.println("1. ALTA Productos");
             System.out.println("2. LISTAR Productos");
             System.out.println("3. BÚSQUEDA por Sabor");
@@ -99,9 +84,37 @@ public class Main {
             sc.nextLine();
 
             switch (opcion){
-                case 1 -> Producto.altaProducto();//ALTA PRODUCTO
+                case 1 -> Producto.altaProducto(); //ALTA PRODUCTO
                 case 2 -> Producto.listarProducto(); //LISTAR PRODUCTO
-                case 3 -> { //BUSCAR PRODUCTO POR SABOR
+                case 3 -> Producto.mostrarProductoPorSabor(); //BUSCAR PRODUCTO POR SABOR
+
+                case 0 -> System.out.println("Volviendo menú principal.\n");
+                default -> System.out.println("Opción no válida.");
+            }
+        }while(opcion != 0);
+    }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                /*
+                    { //BUSCAR PRODUCTO POR SABOR
                     System.out.println("-- 1.2 GESTIÓN PRODUCTOS | BUSCAR PRODUCTO POR SABOR --");
                     System.out.print("Introduce el sabor del producto a buscar: ");
                     String saborBuscado = sc.nextLine();
@@ -115,14 +128,6 @@ public class Main {
                         }
                     } else {
                         System.out.println("No se encontró ningún producto con el sabor: " + saborBuscado);
-                    }
-                }
 
-                case 0 -> System.out.println("Volviendo menú principal.\n");
-                default -> System.out.println("Opción no válida.");
-            }
-        }while(opcion != 0);
-    }
-
-    }
+                }}*/
 

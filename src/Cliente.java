@@ -61,18 +61,20 @@ public class Cliente {
 
         System.out.print("Nombre: ");
         String nombre = sc.nextLine();
+
         System.out.print("DNI: ");
         String dni = sc.nextLine();
-        /* Para comprobar si hay otro cliente igual:
 
-        for (Cliente c: clientes){
+        for (Cliente c: Main.clientes){
             if(c.getDni().equalsIgnoreCase(dni)){
             System.out.println("Ya existe un cliente con este DNI");
             return;
             }
-        }*/
+        }
+
         System.out.print("Teléfono: ");
         String telefono = sc.nextLine();
+
         System.out.print("Email: ");
         String email = sc.nextLine();
 
@@ -80,6 +82,8 @@ public class Cliente {
         sc.nextLine();
         System.out.println("Cliente " + nombre + " añadido correctamente.");
     }
+
+
     //----2 BAJA CLIENTE---------------------------------------------------------------------------
     public static void bajaCliente(){
         System.out.println("Estos son los clientes dados de alta:\n");
@@ -99,6 +103,7 @@ public class Cliente {
             System.out.println("Introduce una posición valida.");
         }
     }
+
 
     //----3 MODIFICAR CLIENTE---------------------------------------------------------------------------
     public static void modificarCliente(){
@@ -137,37 +142,45 @@ public class Cliente {
         }
     }
 
+
     //----4 BUSCAR CLIENTE POR DNI---------------------------------------------------------------------------
     public static Cliente buscarClientePorDNI(String dni){
 
         for(Cliente c: Main.clientes){
-            if (c.getDni().equals(dni)){
+            if (c.getDni().equalsIgnoreCase(dni)){
                 return c;
             }
         }
         return null;
     }
 
+    public static void mostrarClientePorDNI(){
+        System.out.print("Introduce el DNI del cliente a buscar: ");
+        String dniBuscado = sc.nextLine();
+        Cliente clienteEncontrado = Cliente.buscarClientePorDNI(dniBuscado);
+
+        if (clienteEncontrado != null) {
+            System.out.println("\n--- Cliente Encontrado ---");
+            System.out.println("Nombre: " + clienteEncontrado.getNombre());
+            System.out.println("DNI: " + clienteEncontrado.getDni());
+            System.out.println("Teléfono: " + clienteEncontrado.getTelefono());
+            System.out.println("Email: " + clienteEncontrado.getEmail());
+            System.out.println("--------------------------\n");
+        } else {
+            System.out.println("No se encontró ningún cliente con el DNI: " + dniBuscado + "\n");
+        }
+    }
+
+
     //----5 LISTAR CLIENTE---------------------------------------------------------------------------
     public static void listarClientes(){
         for (int i = 0; i < Main.clientes.size(); i++){
             Cliente c = Main.clientes.get(i);
-            System.out.println((i+1) + ". Nombre: " + c.getNombre() + "\nDNI: " + c.getDni() + "\nTeléfono: " + c.getTelefono() + "\nEmail: " + c.getEmail());
+            System.out.println((i+1) + ". Nombre: " + c.getNombre() + "\n\tDNI: " + c.getDni() + "\n\tTeléfono: " + c.getTelefono() + "\n\tEmail: " + c.getEmail());
             System.out.println("\t- - - - -");
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

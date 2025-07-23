@@ -1,4 +1,3 @@
-import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -70,10 +69,8 @@ public class Producto {
 
         for (int i = 0; i < Main.productos.size(); i++){
             Producto p = Main.productos.get(i);
-            System.out.println((i+1) + ". Producto: " + p.getTipoBollo() +
-                    "\n\tSabor: " + p.getSabor() +
-                    "\n\tPrecio: " + p.getPrecio());
-            System.out.println("\t- - - - -");
+            System.out.println((i+1) + ". Producto: " + p.getTipoBollo() + "\n\tSabor: " + p.getSabor() + "\n\tPrecio: " + p.getPrecio());
+            System.out.println("\t- - - - - - - - - -");
         }
     }
 
@@ -88,5 +85,23 @@ public class Producto {
         }
         return productosEncontrados;
     }
+
+    public static void mostrarProductoPorSabor(){
+        System.out.println("-- 1.2 GESTIÓN PRODUCTOS | BUSCAR PRODUCTO POR SABOR --");
+        System.out.print("Introduce el sabor del producto a buscar: ");
+        String saborBuscado = sc.nextLine();
+
+        List<Producto> productosEncontrados = Producto.buscarProductoPorSabor(saborBuscado);
+
+        if (!productosEncontrados.isEmpty()) {
+            System.out.println("Productos con el sabor " + saborBuscado + ":");
+            for (Producto p : productosEncontrados) {
+                System.out.println("* * * Producto: " + p.getTipoBollo() + "\t\tPrecio: " + p.getPrecio());
+            }
+        } else {
+            System.out.println("No se encontró ningún producto con el sabor: " + saborBuscado);
+        }
+    }
+
 
 }
