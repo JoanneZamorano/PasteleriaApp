@@ -2,52 +2,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Producto {
+public class GestionProducto {
     static Scanner sc = new Scanner(System.in);
 
 
-    private String tipoBollo;
-    private String sabor;
-    private double precio;
-
-
-    //Constructor:
-    public Producto(String tipoBollo, String sabor, double precio) {
-        this.tipoBollo = tipoBollo;
-        this.sabor = sabor;
-        this.precio = precio;
-    }
-
-
-    //Getters
-    public String getTipoBollo() {
-        return tipoBollo;
-    }
-
-    public String getSabor() {
-        return sabor;
-    }
-
-    public double getPrecio() {
-        return precio;
-    }
-
-    public void setTipoBollo(String tipoBollo) {
-        this.tipoBollo = tipoBollo;
-    }
-
-
-    //Setters
-    public void setSabor(String sabor) {
-        this.sabor = sabor;
-    }
-
-    public void setPrecio(double precio) {
-        this.precio = precio;
-    }
-
-/*
-    //Métodos:
     //----1 ALTA PRODUCTO---------------------------------------------------------------------------
     public static void altaProducto(){
         System.out.println("-- 1.1 GESTIÓN PRODUCTOS | ALTA PRODUCTO -- \nIntroduce los siguientes datos:");
@@ -95,7 +53,7 @@ public class Producto {
         System.out.print("Introduce el sabor del producto a buscar: ");
         String saborBuscado = sc.nextLine();
 
-        List<Producto> productosEncontrados = Producto.buscarProductoPorSabor(saborBuscado);
+        List<Producto> productosEncontrados = GestionProducto.buscarProductoPorSabor(saborBuscado);
 
         if (!productosEncontrados.isEmpty()) {
             System.out.println("Productos con el sabor " + saborBuscado + ":");
@@ -106,8 +64,4 @@ public class Producto {
             System.out.println("No se encontró ningún producto con el sabor: " + saborBuscado);
         }
     }
-
- */
-
-
 }

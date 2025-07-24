@@ -1,61 +1,9 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
-public class Cliente {
+public class GestionCliente {
     static Scanner sc = new Scanner(System.in);
 
-    private String nombre;
-    private String dni;
-    private String telefono;
-    private String email;
-
-    //Constructor:
-    public Cliente(String nombre, String dni, String telefono, String email) {
-        this.nombre = nombre;
-        this.dni = dni;
-        this.telefono = telefono;
-        this.email = email;
-    }
-
-    //getters:
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getDni() {
-        return dni;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-
-    //Setters:
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    //Métodos
-
-    /*
     //----1 ALTA CLIENTE---------------------------------------------------------------------------
     public static void altaCliente(){
         System.out.println("-- 1.1 GESTIÓN CLIENTES | ALTA CLIENTE-- \nIntroduce los siguientes datos:");
@@ -68,8 +16,8 @@ public class Cliente {
 
         for (Cliente c: Main.clientes){
             if(c.getDni().equalsIgnoreCase(dni)){
-            System.out.println("Ya existe un cliente con este DNI");
-            return;
+                System.out.println("Ya existe un cliente con este DNI");
+                return;
             }
         }
 
@@ -157,7 +105,7 @@ public class Cliente {
     public static void mostrarClientePorDNI(){
         System.out.print("Introduce el DNI del cliente a buscar: ");
         String dniBuscado = sc.nextLine();
-        Cliente clienteEncontrado = Cliente.buscarClientePorDNI(dniBuscado);
+        Cliente clienteEncontrado = GestionCliente.buscarClientePorDNI(dniBuscado);
 
         if (clienteEncontrado != null) {
             System.out.println("\n--- Cliente Encontrado ---");
@@ -209,8 +157,4 @@ public class Cliente {
         }
     }
 
-*/
-
-    }
-
-
+}

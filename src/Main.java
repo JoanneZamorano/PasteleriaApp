@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -10,11 +9,16 @@ public class Main {
     static ArrayList<Venta> ventas = new ArrayList<>();
 
     public static void main(String[] args) {
-        //Cliente c1 = new Cliente("Joa", "123456789A", "666555444", "joa@joa.com");
-        //Producto p1 = new Producto("Galleta", "Chocolate", 5.90);
+
         Scanner sc = new Scanner(System.in);
 
-        //---- MENU PRINCIPAL - Definición para poder generar las funciones en los sub-menus
+        clientes.add(new Cliente("Joa", "11111111A", "600123456", "joa@mail.com"));
+        clientes.add(new Cliente("Adrian", "22222222B", "600987654", "adrian@mail.com"));
+        productos.add(new Producto("Donut", "Chocolate", 1.50));
+        productos.add(new Producto("Croissant", "Mantequilla", 1.20));
+        productos.add(new Producto("Tarta", "Fresa", 12.99));
+
+        //---- MENU PRINCIPAL
         int opcion;
 
         do{
@@ -30,12 +34,12 @@ public class Main {
             switch (opcion){
                 case 1 -> menuGestionClientes(sc);
                 case 2 -> menuGestionProductos(sc);
-                //case 3 -> realizarNuevaVenta(sc);
-                //case 4 -> mostrarMenuVentas();
+                case 3 -> realizarNuevaVenta(sc);
+                case 4 -> mostrarMenuVentas(sc);
 
                 case 0 -> System.out.println("Gracias por usar la app!");
 
-                default -> System.out.println("Opción no válida.");
+                default -> System.out.println("Opción no válida");
              }
         }while(opcion != 0);
     }
@@ -57,11 +61,11 @@ public class Main {
             opcion = sc.nextInt(); sc.nextLine();
 
             switch (opcion){
-                case 1 -> Cliente.altaCliente();//ALTA CLIENTE
-                case 2 -> Cliente.bajaCliente(); //BAJA CLIENTE
-                case 3 -> Cliente.modificarCliente();
-                case 4 -> Cliente.mostrarClientePorDNI(); //BUSCAR CLIENTE POR DNI
-                case 5 -> Cliente.listarClientes();//LISTAR TODOS LOS CLIENTES
+                case 1 -> GestionCliente.altaCliente();//ALTA CLIENTE
+                case 2 -> GestionCliente.bajaCliente(); //BAJA CLIENTE
+                case 3 -> GestionCliente.modificarCliente();
+                case 4 -> GestionCliente.mostrarClientePorDNI(); //BUSCAR CLIENTE POR DNI
+                case 5 -> GestionCliente.listarClientes();//LISTAR TODOS LOS CLIENTES
 
                 case 0 -> System.out.println("Volviendo menú principal.\n");
                 default -> System.out.println("Opción no válida.");
@@ -84,9 +88,9 @@ public class Main {
             sc.nextLine();
 
             switch (opcion){
-                case 1 -> Producto.altaProducto(); //ALTA PRODUCTO
-                case 2 -> Producto.listarProducto(); //LISTAR PRODUCTO
-                case 3 -> Producto.mostrarProductoPorSabor(); //BUSCAR PRODUCTO POR SABOR
+                case 1 -> GestionProducto.altaProducto(); //ALTA PRODUCTO
+                case 2 -> GestionProducto.listarProducto(); //LISTAR PRODUCTO
+                case 3 -> GestionProducto.mostrarProductoPorSabor(); //BUSCAR PRODUCTO POR SABOR
 
                 case 0 -> System.out.println("Volviendo menú principal.\n");
                 default -> System.out.println("Opción no válida.");
@@ -94,40 +98,58 @@ public class Main {
         }while(opcion != 0);
     }
 
+
+    //---- SUBMENU 3: MENU CREAR UNA NUEVA VENTA
+    static void realizarNuevaVenta(Scanner sc){
+        int opcion;
+
+        do{
+            System.out.println("\n- - - - 3. CREAR NUEVA VENTA - - - - ");
+            System.out.println("1. Crear Venta");
+
+            System.out.println("0. Salir");
+
+            opcion = sc.nextInt();
+            sc.nextLine();
+
+            switch (opcion){
+                case 1 -> GestionVenta.crearVenta(sc); //CREAR VENTA
+
+                case 0 -> System.out.println("Volviendo menú principal.\n");
+                default -> System.out.println("Opción no válida.");
+            }
+        }while(opcion != 0);
+    }
+
+    //---- SUBMENU 4: MENU MOSTRAR VENTAS
+    static void mostrarMenuVentas(Scanner sc){
+        int opcion;
+
+        do{
+            System.out.println("\n- - - - 3. MOSTRAR VENTAS - - - - ");
+            System.out.println("1. Mostrar TODAS las ventas");
+            System.out.println("2. Mostrar las ventas por CLIENTE");
+            System.out.println("3. Mostrar IMPORTE TOTAL por venta");
+
+
+            System.out.println("0. Salir");
+
+            opcion = sc.nextInt();
+            sc.nextLine();
+
+            switch (opcion){
+                case 1 -> GestionVenta.listarVentas(); //MOSTRAR TODAS LAS VENTAS
+                case 2 -> GestionVenta.mostrarVentasPorCliente(sc); //MOSTRAR VENTAS POR CLIENTES
+                //case 3 -> GestionVenta.mostrarVentasConImporteTotal(); //MOSTAR IMPORTE TOTAL/VENTA
+
+                case 0 -> System.out.println("Volviendo menú principal.\n");
+                default -> System.out.println("Opción no válida.");
+            }
+        }while(opcion != 0);
     }
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                /*
-                    { //BUSCAR PRODUCTO POR SABOR
-                    System.out.println("-- 1.2 GESTIÓN PRODUCTOS | BUSCAR PRODUCTO POR SABOR --");
-                    System.out.print("Introduce el sabor del producto a buscar: ");
-                    String saborBuscado = sc.nextLine();
-
-                    List<Producto> productosEncontrados = Producto.buscarProductoPorSabor(saborBuscado);
-
-                    if (!productosEncontrados.isEmpty()) {
-                        System.out.println("Productos con el sabor " + saborBuscado + ":");
-                        for (Producto p : productosEncontrados) {
-                            System.out.println("* * * Producto: " + p.getTipoBollo() + "\t\tPrecio: " + p.getPrecio());
-                        }
-                    } else {
-                        System.out.println("No se encontró ningún producto con el sabor: " + saborBuscado);
-
-                }}*/
+}
 
