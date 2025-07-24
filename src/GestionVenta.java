@@ -94,7 +94,7 @@ public class GestionVenta {
                 if (venta.getCliente().getDni().equalsIgnoreCase(clienteBuscado.getDni())) {
                     ventasEncontradas = true;
                     contadorVentas++;
-                    System.out.println("\n------------------------------------");
+                    System.out.println();
                     venta.mostrarTicket();
                 }
             }
@@ -105,7 +105,18 @@ public class GestionVenta {
             System.out.println("------------------------------------\n");
         }
 
-
+    //----- LISTAR TODAS VENTAS por importe
+    public static void listarVentasSoloImporte(){
+        System.out.println("\n--- LISTADO DE TODAS LAS VENTAS ---");
+        if (Main.ventas.isEmpty()) {
+            System.out.println("No hay ventas registradas aún.");
+            return;
+        }
+        for (int i = 0; i < Main.ventas.size(); i++) {
+            Venta v = Main.ventas.get(i);
+            System.out.println("Venta " + (i + 1) + ": " + "\t- Total: " + v.getTotalVenta() + "€");
+        }
+    }
 
 
 

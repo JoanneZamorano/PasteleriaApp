@@ -140,7 +140,7 @@ public class Main {
             switch (opcion){
                 case 1 -> GestionVenta.listarVentas(); //MOSTRAR TODAS LAS VENTAS
                 case 2 -> GestionVenta.mostrarVentasPorCliente(sc); //MOSTRAR VENTAS POR CLIENTES
-                //case 3 -> GestionVenta.mostrarVentasConImporteTotal(); //MOSTAR IMPORTE TOTAL/VENTA
+                case 3 -> GestionVenta.listarVentasSoloImporte(); //MOSTAR IMPORTE TOTAL/VENTA
 
                 case 0 -> System.out.println("Volviendo menú principal.\n");
                 default -> System.out.println("Opción no válida.");
