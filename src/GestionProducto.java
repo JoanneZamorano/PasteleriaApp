@@ -2,11 +2,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Funciones para el menú de Productos
+ * @author Joanne Zamorano
+ * @version 1.0
+ */
+
 public class GestionProducto {
     static Scanner sc = new Scanner(System.in);
 
 
-    //----1 ALTA PRODUCTO---------------------------------------------------------------------------
+    /**
+     * Función para gestionar el alta de un nuevo producto
+     */
     public static void altaProducto(){
         System.out.println("-- 1.1 GESTIÓN PRODUCTOS | ALTA PRODUCTO -- \nIntroduce los siguientes datos:");
 
@@ -25,7 +33,9 @@ public class GestionProducto {
     }
 
 
-    //----2 LISTAR PRODUCTO---------------------------------------------------------------------------
+    /**
+     * Función para listar los productos
+     */
     public static void listarProducto(){
         System.out.println("-- 1.2 GESTIÓN PRODUCTOS | LISTAR PRODUCTOS --");
 
@@ -37,7 +47,11 @@ public class GestionProducto {
     }
 
 
-    //----3 BUSCAR PRODUCTO POR SABOR---------------------------------------------------------------------------
+    /**
+     * Función para buscar un producto por sabor
+     * @param sabor sabor del Producto
+     * @return producto filtrado por sabor
+     */
     public static List<Producto> buscarProductoPorSabor(String sabor) {
         List<Producto> productosEncontrados = new ArrayList<>();
         for (Producto p : Main.productos) {
@@ -48,6 +62,9 @@ public class GestionProducto {
         return productosEncontrados;
     }
 
+    /**
+     * Imprime los productos encontrados por sabor de la función: buscarProductoPorSabor()
+     */
     public static void mostrarProductoPorSabor(){
         System.out.println("-- 1.2 GESTIÓN PRODUCTOS | BUSCAR PRODUCTO POR SABOR --");
         System.out.print("Introduce el sabor del producto a buscar: ");

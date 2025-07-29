@@ -46,7 +46,7 @@ public class Main {
 
 
     //---- SUBMENU 1: MENU GESTIÓN CLIENTES
-     static void menuGestionClientes(Scanner sc){
+     public static void menuGestionClientes(Scanner sc){
         int opcion;
 
         do{
@@ -63,7 +63,7 @@ public class Main {
             switch (opcion){
                 case 1 -> GestionCliente.altaCliente();//ALTA CLIENTE
                 case 2 -> GestionCliente.bajaCliente(); //BAJA CLIENTE
-                case 3 -> GestionCliente.modificarCliente();
+                case 3 -> GestionCliente.modificarCliente(); //MODIFICAR CLIENTES
                 case 4 -> GestionCliente.mostrarClientePorDNI(); //BUSCAR CLIENTE POR DNI
                 case 5 -> GestionCliente.listarClientes();//LISTAR TODOS LOS CLIENTES
 
@@ -74,7 +74,7 @@ public class Main {
     }
 
     //---- SUBMENU 2: MENU GESTIÓN PRODUCTOS
-    static void menuGestionProductos(Scanner sc){
+    public static void menuGestionProductos(Scanner sc){
         int opcion;
 
         do{
@@ -100,7 +100,7 @@ public class Main {
 
 
     //---- SUBMENU 3: MENU CREAR UNA NUEVA VENTA
-    static void realizarNuevaVenta(Scanner sc){
+    public static void realizarNuevaVenta(Scanner sc){
         int opcion;
 
         do{
@@ -122,7 +122,7 @@ public class Main {
     }
 
     //---- SUBMENU 4: MENU MOSTRAR VENTAS
-    static void mostrarMenuVentas(Scanner sc){
+    public static void mostrarMenuVentas(Scanner sc){
         int opcion;
 
         do{

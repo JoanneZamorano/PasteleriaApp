@@ -1,10 +1,19 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
+
+/**
+ * Funciones para el menú de Clientes
+ * @author Joanne Zamorano
+ * @version 1.0
+ */
 
 public class GestionCliente {
     static Scanner sc = new Scanner(System.in);
 
-    //----1 ALTA CLIENTE---------------------------------------------------------------------------
+    /**
+     * Función para gestionar el alta de un nuevo Cliente
+     */
     public static void altaCliente(){
         System.out.println("-- 1.1 GESTIÓN CLIENTES | ALTA CLIENTE-- \nIntroduce los siguientes datos:");
 
@@ -32,7 +41,9 @@ public class GestionCliente {
     }
 
 
-    //----2 BAJA CLIENTE---------------------------------------------------------------------------
+    /**
+     * Función para gestionar la baja de un cliente existente
+     */
     public static void bajaCliente(){
         System.out.println("Estos son los clientes dados de alta:\n");
         for (int i = 0; i < Main.clientes.size(); i++){
@@ -53,7 +64,9 @@ public class GestionCliente {
     }
 
 
-    //----3 MODIFICAR CLIENTE---------------------------------------------------------------------------
+    /**
+     * Función para gestionar la modificación de un cliente existente
+     */
     public static void modificarCliente(){
         System.out.println("Estos son los clientes dados de alta:\n");
         for (int i = 0; i < Main.clientes.size(); i++){
@@ -91,7 +104,11 @@ public class GestionCliente {
     }
 
 
-    //----4 BUSCAR CLIENTE POR DNI---------------------------------------------------------------------------
+    /**
+     * Función para realizar la búsqueda de un cliente existente mediante DNI
+     * @param dni DNI del Cliente
+     * @return Cliente que corresponde con el DNI introducido
+     */
     public static Cliente buscarClientePorDNI(String dni){
 
         for(Cliente c: Main.clientes){
@@ -102,6 +119,9 @@ public class GestionCliente {
         return null;
     }
 
+    /**
+     * Función para mostrar al cliente existente buscado por el DNI
+     */
     public static void mostrarClientePorDNI(){
         System.out.print("Introduce el DNI del cliente a buscar: ");
         String dniBuscado = sc.nextLine();
@@ -120,18 +140,27 @@ public class GestionCliente {
     }
 
 
-    //----5 LISTAR CLIENTE---------------------------------------------------------------------------
+    /**
+     * Función para listar a Todos los clientes existentes con sus datos, ya ordenados alfabeticamente
+     */
     public static void listarClientes(){
+        //Ordenar los nombres de los clientes alfabeticamente:
+        Collections.sort(Main.clientes, (c1, c2) -> c1.getNombre().compareToIgnoreCase(c2.getNombre()));
+
         for (int i = 0; i < Main.clientes.size(); i++){
             Cliente c = Main.clientes.get(i);
             System.out.println((i+1) + ". Nombre: " + c.getNombre() + "\n\tDNI: " + c.getDni() + "\n\tTeléfono: " + c.getTelefono() + "\n\tEmail: " + c.getEmail());
             System.out.println("\t- - - - -");
         }
-
     }
 
 
-    //6. seleccionar cliente para venta:
+    /**
+     * Función para seleccionar cliente para realizar una venta
+     * @param listaClientes muestra la lista de Todos los clientes para seleccionarlos
+     * @param sc Scanner para introducir datos
+     * @return cliente seleccionado
+     */
     public static Cliente seleccionarCliente(ArrayList<Cliente> listaClientes, Scanner sc) {
         if (listaClientes.isEmpty()) {
             System.out.println("No hay clientes, añade clientes primero");
