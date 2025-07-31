@@ -106,8 +106,9 @@ public class Venta {
                 System.out.println((i + 1) + ". " + p.getTipoBollo() + "\t - " + p.getSabor() + "\t - " + p.getPrecio() + "€");
             }
         }
-        System.out.println("\nTOTAL:" + totalVenta + "€");
-        System.out.println("------------------------------------");
+        System.out.printf("\nTOTAL: %.2f €", totalVenta);
+        System.out.println();
+        System.out.println("---------------------------");
     }
 
 

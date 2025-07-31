@@ -112,7 +112,6 @@ public class GestionVenta {
         if (!ventasEncontradas) {
             System.out.println("No se encontraron ventas para el cliente " + clienteBuscado.getNombre() + ".");
         }
-        System.out.println("------------------------------------\n");
     }
 
 
@@ -128,10 +127,9 @@ public class GestionVenta {
         }
         for (int i = 0; i < Main.ventas.size(); i++) {
             Venta v = Main.ventas.get(i);
-            System.out.println("Venta " + (i + 1) + ": " + "\t- Total: " + v.getTotalVenta() + "€");
+            System.out.printf("\nVenta " + (i + 1) + ": " + "\t- Total: %.2f € ", v.getTotalVenta() );
         }
+        System.out.println("------------------------------------\n");
     }
-
-
 
 }
