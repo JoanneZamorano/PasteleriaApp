@@ -1,4 +1,3 @@
-import java.util.Scanner;
 
 /**
  * Clase Producto
@@ -6,7 +5,6 @@ import java.util.Scanner;
  * @version 1.0
  */
 public class Producto {
-    static Scanner sc = new Scanner(System.in);
 
     private String tipoBollo;
     private String sabor;

@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Funciones para el menú de Productos
@@ -9,8 +8,6 @@ import java.util.Scanner;
  */
 
 public class GestionProducto {
-    static Scanner sc = new Scanner(System.in);
-
 
     /**
      * Función para gestionar el alta de un nuevo producto
@@ -19,14 +16,14 @@ public class GestionProducto {
         System.out.println("-- 1.1 GESTIÓN PRODUCTOS | ALTA PRODUCTO -- \nIntroduce los siguientes datos:");
 
         System.out.print("Tipo producto: ");
-        String tipoBollo = sc.nextLine();
+        String tipoBollo = Main.sc.nextLine();
 
         System.out.print("Sabor: ");
-        String sabor = sc.nextLine();
+        String sabor = Main.sc.nextLine();
 
         System.out.print("Precio: ");
-        Double precio = sc.nextDouble();
-        sc.nextLine();
+        Double precio = Main.sc.nextDouble();
+        Main.sc.nextLine();
 
         Main.productos.add(new Producto(tipoBollo, sabor, precio));
         System.out.println("Producto " + tipoBollo + " añadido correctamente.");
@@ -68,7 +65,7 @@ public class GestionProducto {
     public static void mostrarProductoPorSabor(){
         System.out.println("-- 1.2 GESTIÓN PRODUCTOS | BUSCAR PRODUCTO POR SABOR --");
         System.out.print("Introduce el sabor del producto a buscar: ");
-        String saborBuscado = sc.nextLine();
+        String saborBuscado = Main.sc.nextLine();
 
         List<Producto> productosEncontrados = GestionProducto.buscarProductoPorSabor(saborBuscado);
 
