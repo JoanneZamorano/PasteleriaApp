@@ -62,7 +62,7 @@ Una vez que el proyecto ha sido compilado (siguiendo las instrucciones en la sec
     - `testing`: Rama utilizada para realizar pruebas.
 
 ## Estructura del proyecto
-
+```
 ├── docs/                                 # Documentación generada con JavaDoc
 ├── src/
 │   ├── main/java/                        # Código fuente
