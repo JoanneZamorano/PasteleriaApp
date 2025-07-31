@@ -1,19 +1,15 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
-
-/**
- * Funciones para el menú de Productos
- * @author Joanne Zamorano
- * @version 1.0
- */
+import java.util.Map;
 
 public class GestionProducto {
 
     /**
      * Función para gestionar el alta de un nuevo producto
      */
-    public static void altaProducto(){
-        System.out.println("-- 1.1 GESTIÓN PRODUCTOS | ALTA PRODUCTO -- \nIntroduce los siguientes datos:");
+    public static void altaProducto() {
+        System.out.println("-- ALTA PRODUCTO -- \n\nIntroduce los siguientes datos:");
 
         System.out.print("Tipo producto: ");
         String tipoBollo = Main.sc.nextLine();
@@ -21,25 +17,65 @@ public class GestionProducto {
         System.out.print("Sabor: ");
         String sabor = Main.sc.nextLine();
 
-        System.out.print("Precio: ");
-        Double precio = Main.sc.nextDouble();
-        Main.sc.nextLine();
+        double precio = 0.0;
+        try {
+            System.out.print("Precio: ");
+            precio = Main.sc.nextDouble();
+            Main.sc.nextLine();
+        } catch (InputMismatchException e) {
+            System.out.println("Error: Debes introducir un número para el precio");
+            Main.sc.nextLine();
+            return;
+        }
 
-        Main.productos.add(new Producto(tipoBollo, sabor, precio));
-        System.out.println("Producto " + tipoBollo + " añadido correctamente.");
+        int stock = 0;
+        try {
+            System.out.print("Stock inicial: ");
+            stock = Main.sc.nextInt();
+            Main.sc.nextLine();
+        } catch (InputMismatchException e) {
+            System.out.println("Error: Debes introducir un número entero para el stock");
+            Main.sc.nextLine();
+            return;
+        }
+
+        String claveProducto = tipoBollo.toLowerCase() + "-" + sabor.toLowerCase();
+
+        // Verificar si el producto ya existe en el mapa
+        if (Main.productosConStock.containsKey(claveProducto)) {
+            System.out.println("\n ** Este producto ya existe. Se actualizará el Stock");
+
+            // Obtener el objeto ProductoStock y actualizar su stock
+            ProductoStock productoExistente = Main.productosConStock.get(claveProducto);
+            productoExistente.setStock(productoExistente.getStock() + stock);
+
+            System.out.println("\n ** Stock de " + tipoBollo + " - " + sabor + " actualizado correctamente. Nuevo stock: " + productoExistente.getStock());
+        } else {
+            // Si el producto no existe, crearlo y añadirlo al mapa
+            Producto nuevoProducto = new Producto(tipoBollo, sabor, precio);
+            Main.productosConStock.put(claveProducto, new ProductoStock(nuevoProducto, stock));
+
+            System.out.println("\n ** " + tipoBollo + " - " + sabor + " añadido correctamente. Stock: " + stock);
+        }
     }
 
 
     /**
      * Función para listar los productos
      */
-    public static void listarProducto(){
-        System.out.println("-- 1.2 GESTIÓN PRODUCTOS | LISTAR PRODUCTOS --");
+    public static void listarProducto() {
+        System.out.println("-- LISTADO DE PRODUCTOS --\n");
 
-        for (int i = 0; i < Main.productos.size(); i++){
-            Producto p = Main.productos.get(i);
-            System.out.println((i+1) + ". Producto: " + p.getTipoBollo() + "\n\tSabor: " + p.getSabor() + "\n\tPrecio: " + p.getPrecio());
-            System.out.println("\t- - - - - - - - - -");
+        if (Main.productosConStock.isEmpty()) {
+            System.out.println("No hay productos registrados");
+        } else {
+            int i = 1;
+            for (Map.Entry<String, ProductoStock> entry : Main.productosConStock.entrySet()) {
+                ProductoStock ps = entry.getValue();
+                Producto p = ps.getProducto();
+                System.out.println("Producto " + (i) + " : " + p.getTipoBollo() + "\t\tSabor: " + p.getSabor() + "\t\tPrecio: " + p.getPrecio() + "€" + "\t\tStock: " + ps.getStock());
+                i++;
+            }
         }
     }
 
@@ -49,11 +85,11 @@ public class GestionProducto {
      * @param sabor sabor del Producto
      * @return producto filtrado por sabor
      */
-    public static List<Producto> buscarProductoPorSabor(String sabor) {
-        List<Producto> productosEncontrados = new ArrayList<>();
-        for (Producto p : Main.productos) {
-            if (p.getSabor().equalsIgnoreCase(sabor)) {
-                productosEncontrados.add(p);
+    public static List<ProductoStock> buscarProductoPorSabor(String sabor) {
+        List<ProductoStock> productosEncontrados = new ArrayList<>();
+        for (ProductoStock ps : Main.productosConStock.values()) {
+            if (ps.getProducto().getSabor().equalsIgnoreCase(sabor)) {
+                productosEncontrados.add(ps);
             }
         }
         return productosEncontrados;
@@ -62,20 +98,20 @@ public class GestionProducto {
     /**
      * Imprime los productos encontrados por sabor de la función: buscarProductoPorSabor()
      */
-    public static void mostrarProductoPorSabor(){
-        System.out.println("-- 1.2 GESTIÓN PRODUCTOS | BUSCAR PRODUCTO POR SABOR --");
-        System.out.print("Introduce el sabor del producto a buscar: ");
+    public static void mostrarProductoPorSabor() {
+        System.out.println("-- BUSCAR PRODUCTO POR SABOR --");
+        System.out.print("\nIntroduce el sabor del producto a buscar: ");
         String saborBuscado = Main.sc.nextLine();
 
-        List<Producto> productosEncontrados = GestionProducto.buscarProductoPorSabor(saborBuscado);
+        List<ProductoStock> productosEncontrados = GestionProducto.buscarProductoPorSabor(saborBuscado);
 
         if (!productosEncontrados.isEmpty()) {
-            System.out.println("Productos con el sabor " + saborBuscado + ":");
-            for (Producto p : productosEncontrados) {
-                System.out.println("* * * Producto: " + p.getTipoBollo() + "\t\tPrecio: " + p.getPrecio());
+            System.out.println("\nProductos con el sabor " + saborBuscado + ":");
+            for (ProductoStock ps : productosEncontrados) {
+                System.out.println("* Producto: " + ps.getProducto().getTipoBollo() + "\t\tPrecio: " + ps.getProducto().getPrecio() + "\t\tStock: " + ps.getStock());
             }
         } else {
-            System.out.println("No se encontró ningún producto con el sabor: " + saborBuscado);
+            System.out.println("No hay ningún producto con el sabor: " + saborBuscado);
         }
     }
 }
