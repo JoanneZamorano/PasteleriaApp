@@ -57,21 +57,25 @@ Una vez que el proyecto ha sido compilado (siguiendo las instrucciones en la sec
 - **Pruebas unitarias:** Se han implementado pruebas unitarias con JUnit5.
 - **Control de versiones:** Se utiliza Git y GitHub para el control de versiones, con las siguientes ramas:
     - `main`: Contiene la versión estable del proyecto.
-    - `dev`: Rama de desarrollo activo.
-    - `feature/<Joanne>`: Ramas para implementar nuevas mejoras o tareas específicas.
-    - `testing`: Rama utilizada para realizar pruebas.
+    - `dev/Joanne``: Rama de desarrollo activo.
+    - `feature/Joanne`: Ramas para implementar nuevas mejoras o tareas específicas.
+    - `testing/Joanne``: Rama utilizada para realizar pruebas.
 
 ## Estructura del proyecto
 ```
-├── docs/                                 # Documentación generada con JavaDoc
+├── docs/                                     # Documentación generada con JavaDoc
 ├── src/
-│   ├── main                              # Código fuente
-│   ├── Cliente
-│   ├── GestionCliente
-│   ├── GestionProducto
-│   ├── GestionVenta
-│   ├── Producto
-│   ├── Venta                          
-├── test                                  # Tests con JUnit
-├── pom.xml                               # Configuración de Maven
+│   ├── main/java                             # Código fuente
+│       ├── Cliente
+│       ├── GestionCliente
+│       ├── GestionProducto
+│       ├── GestionVenta
+│       ├── Main
+│       ├── Producto
+│       ├── Venta                          
+│   ├── test/java                             # Tests con JUnit
+│       ├── GestionClienteTest
+│       ├── GestionProductoTest
+│       ├── GestionVentaTest
+├── pom.xml                                   # Configuración de Maven
 └── README.md
