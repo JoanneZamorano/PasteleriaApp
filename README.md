@@ -49,6 +49,7 @@ Una vez que el proyecto ha sido compilado (siguiendo las instrucciones en la sec
 - **Autor:** Joanne Zamorano Berrocal.
 - **Proyecto Módulos:** DAM: Programación y Entornos de Desarrollo.
 - **Año:** 2025
+    - **Version 1.0** Julio - Agosto 2025
 - **Licencia:** Este proyecto tiene fines educativos, creado para practicar los conceptos aprendidos hasta este momento en el curso. 
 
 ## Documentación, pruebas y control de versiones
@@ -57,9 +58,9 @@ Una vez que el proyecto ha sido compilado (siguiendo las instrucciones en la sec
 - **Pruebas unitarias:** Se han implementado pruebas unitarias con JUnit5.
 - **Control de versiones:** Se utiliza Git y GitHub para el control de versiones, con las siguientes ramas:
     - `main`: Contiene la versión estable del proyecto.
-    - `dev/Joanne``: Rama de desarrollo activo.
+    - `dev/Joanne`: Rama de desarrollo activo.
     - `feature/Joanne`: Ramas para implementar nuevas mejoras o tareas específicas.
-    - `testing/Joanne``: Rama utilizada para realizar pruebas.
+    - `testing/Joanne`: Rama utilizada para realizar pruebas.
 
 ## Estructura del proyecto
 ```
