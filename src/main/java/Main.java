@@ -14,8 +14,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
-
         clientes.add(new Cliente("Joa", "11111111A", "600123456", "joa@mail.com"));
         clientes.add(new Cliente("Adrian", "22222222B", "600987654", "adrian@mail.com"));
         productos.add(new Producto("Donut", "Chocolate", 1.50));

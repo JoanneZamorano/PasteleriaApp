@@ -9,7 +9,7 @@ import java.util.Scanner;
  */
 
 public class GestionCliente {
-    static Scanner sc = new Scanner(System.in);
+
 
     /**
      * Función para gestionar el alta de un nuevo Cliente
@@ -18,10 +18,10 @@ public class GestionCliente {
         System.out.println("-- 1.1 GESTIÓN CLIENTES | ALTA CLIENTE-- \nIntroduce los siguientes datos:");
 
         System.out.print("Nombre: ");
-        String nombre = sc.nextLine();
+        String nombre = Main.sc.nextLine();
 
         System.out.print("DNI: ");
-        String dni = sc.nextLine();
+        String dni = Main.sc.nextLine();
 
         for (Cliente c: Main.clientes){
             if(c.getDni().equalsIgnoreCase(dni)){
@@ -31,10 +31,10 @@ public class GestionCliente {
         }
 
         System.out.print("Teléfono: ");
-        String telefono = sc.nextLine();
+        String telefono = Main.sc.nextLine();
 
         System.out.print("Email: ");
-        String email = sc.nextLine();
+        String email = Main.sc.nextLine();
 
         Main.clientes.add(new Cliente(nombre, dni, telefono, email));
         System.out.println("Cliente " + nombre + " añadido correctamente.");
@@ -51,15 +51,20 @@ public class GestionCliente {
             System.out.println((i+1) + ".Nombre: " + c.getNombre() + "\tDNI: " + c.getDni());
         }
         System.out.println("\nIntroduce la posición del cliente a borrar: ");
-        int pos = sc.nextInt();
-        sc.nextLine();
-        pos--;
+        try{
+            int pos = Main.sc.nextInt();
+            Main.sc.nextLine();
+            pos--;
 
-        if (pos >= 0 && pos < Main.clientes.size()){
-            Main.clientes.remove(pos);
-            System.out.println("Se ha borrado correctamente.");
-        }else{
-            System.out.println("Introduce una posición valida.");
+            if (pos >= 0 && pos < Main.clientes.size()){
+                Main.clientes.remove(pos);
+                System.out.println("Se ha borrado correctamente.");
+            }else{
+                System.out.println("Introduce una posición valida.");
+            }
+        }catch (java.util.InputMismatchException e) {
+            System.out.println("Error: Debes introducir un número entero. Por favor, inténtalo de nuevo.");
+            Main.sc.nextLine(); // Limpiar el buffer del scanner en caso de error
         }
     }
 
@@ -75,27 +80,27 @@ public class GestionCliente {
         }
 
         System.out.println("\nIntroduce la posición del cliente a modificar: ");
-        int pos = sc.nextInt();
-        sc.nextLine();
+        int pos = Main.sc.nextInt();
+        Main.sc.nextLine();
         pos--;
 
         if (pos >= 0 && pos < Main.clientes.size()) {
             Cliente clienteAModificar = Main.clientes.get(pos);
 
             System.out.println("Modifica su nombre (actual: " + clienteAModificar.getNombre() + "):");
-            String newName = sc.nextLine();
+            String newName = Main.sc.nextLine();
             clienteAModificar.setNombre(newName);
 
             System.out.println("Modifica su DNI (actual: " + clienteAModificar.getDni() + "):");
-            String newID = sc.nextLine();
+            String newID = Main.sc.nextLine();
             clienteAModificar.setDni(newID);
 
             System.out.println("Modifica su teléfono (actual: " + clienteAModificar.getTelefono() + "):");
-            String newPhone = sc.nextLine();
+            String newPhone = Main.sc.nextLine();
             clienteAModificar.setTelefono(newPhone);
 
             System.out.println("Modifica su email (actual: " + clienteAModificar.getEmail() + "):");
-            String newEmail = sc.nextLine();
+            String newEmail = Main.sc.nextLine();
             clienteAModificar.setEmail(newEmail);
 
         }else{
@@ -124,7 +129,7 @@ public class GestionCliente {
      */
     public static void mostrarClientePorDNI(){
         System.out.print("Introduce el DNI del cliente a buscar: ");
-        String dniBuscado = sc.nextLine();
+        String dniBuscado = Main.sc.nextLine();
         Cliente clienteEncontrado = GestionCliente.buscarClientePorDNI(dniBuscado);
 
         if (clienteEncontrado != null) {
