@@ -168,25 +168,24 @@ public class GestionCliente {
      */
     public static Cliente seleccionarCliente(ArrayList<Cliente> listaClientes, Scanner sc) {
         if (listaClientes.isEmpty()) {
-            System.out.println("No hay clientes, añade clientes primero");
+            System.out.println("Error: No hay clientes, añádelos primero");
             return null;
         }
 
-        System.out.println("\n--- SELECCIONAR CLIENTE PARA LA VENTA ---");
-        System.out.println("Clientes disponibles:");
+        System.out.println("Clientes disponibles:\n");
         for (int i = 0; i < listaClientes.size(); i++) {
             Cliente c = listaClientes.get(i);
-            System.out.println((i + 1) + ". " + c.getNombre() + " (DNI: " + c.getDni() + ")");
+            System.out.println("\t"+ (i + 1) + ". " + c.getNombre() + " (DNI: " + c.getDni() + ")");
         }
 
-        System.out.print("Introduce el número del cliente: ");
+        System.out.print("\nIntroduce el número del cliente: ");
         int numCliente = sc.nextInt();
         sc.nextLine();
 
         if (numCliente > 0 && numCliente <= listaClientes.size()) {
             return listaClientes.get(numCliente - 1);
         } else {
-            System.out.println("Número de cliente inválido.");
+            System.out.println("Número de cliente no válido");
             return null;
         }
     }

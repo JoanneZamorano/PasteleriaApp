@@ -24,7 +24,10 @@ public class Venta {
     public Venta(Cliente cliente) {
         this.cliente = cliente;
         this.lineasDeVenta = new ArrayList<>();
-        this.fecha = fecha;
+
+        LocalDate hoy = LocalDate.now();
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        this.fecha = hoy.format(formato);
 
         this.totalVenta = 0.0;
     }
@@ -36,14 +39,16 @@ public class Venta {
      * @return Cliente de la venta
      */
     public Cliente getCliente() {
+
         return this.cliente;
     }
 
     /**
      * Devuelve la lista de productos de la venta
-     * @return líneas de Venta (1 o varios productos de la venta)
+     * @return líneas de Venta (1 o más productos de la venta)
      */
     public ArrayList<Producto> getLineasDeVenta() {
+
         return this.lineasDeVenta;
     }
 
@@ -52,6 +57,7 @@ public class Venta {
      * @return Fecha de la venta
      */
     public String getFecha() {
+
         return this.fecha;
     }
 
@@ -60,13 +66,14 @@ public class Venta {
      * @return Importe total de la venta
      */
     public double getTotalVenta() {
+
         return totalVenta;
     }
 
 
     //Métodos
     /**
-     * Método para añadir un tipo de bollo (Producto) a la Venta
+     * Añadir un tipo de bollo (Producto) a la Venta
      * @param producto Producto que se añade a la venta
      */
     public void addProducto(Producto producto) {
@@ -74,8 +81,10 @@ public class Venta {
         calcularTotal();
     }
 
+
+
     /**
-     * Método para calcular el importe TOTAL de la Venta
+     * Calcular el importe TOTAL de la Venta
      */
     private void calcularTotal() {
         this.totalVenta = 0.0;
@@ -85,32 +94,24 @@ public class Venta {
     }
 
     /**
-     * Método para obtener un "Ticket" de la venta donde se imprime:
+     * Obtener un "Ticket" de la venta donde se imprime:
      * Fecha de la venta, Cliente que compró, DNI del cliente, lineas de venta, Importe total Venta
      */
     public void mostrarTicket() {
-        LocalDate hoy = LocalDate.now();
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String fecha = hoy.format(formato);
 
-        System.out.println("\n--- TICKET DE VENTA ---");
 
-        System.out.println("Fecha: " + fecha );
-        System.out.println("Cliente: " + cliente.getNombre() + " (DNI: " + cliente.getDni() + ")");
+        System.out.println("---------------------------");
+        System.out.println("Fecha: " + getFecha() + " | Cliente: " + cliente.getNombre() + " | DNI: " + cliente.getDni());
+
         System.out.println("Productos:");
-        if (lineasDeVenta.isEmpty()) {
-            System.out.println("-- No hay productos en esta venta --");
-        } else {
             for (int i = 0; i < lineasDeVenta.size(); i++) {
                 Producto p = lineasDeVenta.get(i);
-                System.out.println((i + 1) + ". " + p.getTipoBollo() + "\t - " + p.getSabor() + "\t - " + p.getPrecio() + "€");
+                System.out.println("\t" + (i + 1) + ". " + p.getTipoBollo() + "\t - " + p.getSabor() + "\t - " + p.getPrecio() + "€");
             }
-        }
-        System.out.printf("\nTOTAL: %.2f €", totalVenta);
-        System.out.println();
-        System.out.println("---------------------------");
-    }
 
+        System.out.printf("\nTOTAL: %.2f €", totalVenta);
+        System.out.println("\n---------------------------");
+    }
 
 
 }

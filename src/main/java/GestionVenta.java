@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -5,6 +8,7 @@ import java.util.Scanner;
  * @author Joanne Zamorano
  * @version 1.0
  */
+
 public class GestionVenta {
 
     /**
@@ -12,105 +16,121 @@ public class GestionVenta {
      * @param sc Scanner para introducir datos
      */
     public static void crearVenta(Scanner sc) {
-        System.out.println("\n--- INICIAR NUEVA VENTA ---");
+        System.out.println("\nIniciando una venta nueva");
 
-    // 1 seleccionar un cliente
         Cliente clienteSeleccionado = GestionCliente.seleccionarCliente(Main.clientes, sc);
         if (clienteSeleccionado == null) {
-            System.out.println("No se pudo seleccionar un cliente. Volviendo al menú de ventas.");
+            System.out.println("VENTA CANCELADA: Cliente seleccionado no es válido");
             return;
         }
 
         Venta nuevaVenta = new Venta(clienteSeleccionado);
+        System.out.println("\n * * * Venta asignada a: " + clienteSeleccionado.getNombre() + " * * * ");
 
-    // 2 Añadir productos a la venta
         boolean SumarProductos = true;
         while (SumarProductos) {
-            System.out.println("\n--- Añadir productos: ---");
+            System.out.println("\nSelecciona los productos a vender de la siguiente lista:\n");
+            GestionProducto.listarProducto();
 
-            GestionProducto.listarProducto(); //lista de productos disponibles para que el usuario elija
+            System.out.print("\nIntroduce el número del producto / 0 para finalizar la venta: ");
+            int numProducto = 0;
 
-            System.out.print("Introduce el número del producto a añadir (0 para terminar): ");
-            int numProducto = sc.nextInt();
-            sc.nextLine();
+            try {
+                numProducto = sc.nextInt();
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Introduce un número, por favor");
+                sc.nextLine();
+                continue;
+            }
 
             if (numProducto == 0) {
                 SumarProductos = false;
-            } else if (numProducto > 0 && numProducto <= Main.productos.size()) {
-                Producto productoAnadido = Main.productos.get(numProducto - 1);
-                nuevaVenta.addProducto(productoAnadido);
-                System.out.println("Producto '" + productoAnadido.getTipoBollo() + " - " + productoAnadido.getSabor() + "' añadido a la venta.");
+            } else if (numProducto > 0 && numProducto <= Main.productosConStock.size()) {
+                List<ProductoStock> listaProductos = new ArrayList<>(Main.productosConStock.values());
+                ProductoStock productoStockSeleccionado = listaProductos.get(numProducto - 1);
+
+                if (productoStockSeleccionado.getStock() > 0) {
+                    nuevaVenta.addProducto(productoStockSeleccionado.getProducto());
+                    productoStockSeleccionado.decrementarStock(1);
+
+                    System.out.println("\t - " + productoStockSeleccionado.getProducto().getTipoBollo() + " - " + productoStockSeleccionado.getProducto().getSabor() + " añadido a la venta. Stock restante: " + productoStockSeleccionado.getStock());
+                } else {
+                    System.out.println("\n * * * PRODUCTO AGOTADO: " + productoStockSeleccionado.getProducto().getTipoBollo() + " - " + productoStockSeleccionado.getProducto().getSabor() + " * * * ");
+                }
+
             } else {
-                System.out.println("Número de producto inválido. Inténtalo de nuevo.");
+                System.out.println("\n * * * PRUEBA OTRA VEZ: El número de producto no es válido * * * ");
             }
         }
 
-    //3 Guardar la venta
-        if (!nuevaVenta.getLineasDeVenta().isEmpty()) { //solo guarda si hay productos
+        if (!nuevaVenta.getLineasDeVenta().isEmpty()) {
             Main.ventas.add(nuevaVenta);
-
-            System.out.println("\nVenta creada exitosamente:");
+            System.out.println("\n * * * VENTA REALIZADA * * * \n");
             nuevaVenta.mostrarTicket();
         } else {
-            System.out.println("Venta cancelada: No se añadieron productos.");
+            System.out.println("\n * * * VENTA CANCELADA: No se ha añadido ningún producto * * * ");
         }
     }
 
 
+    //--- LISTAR VENTAS ------------------------------------------------------------------
     /**
-     * Función para listar TODAS las ventas
+     * Función para listar TODAS las ventas - Muestra todos los tickets realizados
      */
     public static void listarVentas(){
-        System.out.println("\n--- LISTADO DE TODAS LAS VENTAS ---");
+        System.out.println("\n--- LISTADO DE TODAS LAS VENTAS:");
 
         if (Main.ventas.isEmpty()) {
-            System.out.println("No hay ventas registradas aún.");
+            System.out.println("\n* * * No se han realizado ventas * * *");
             return;
         }
 
         for (int i = 0; i < Main.ventas.size(); i++) {
             Venta v = Main.ventas.get(i);
-            System.out.println((i + 1) + ". Cliente: " + v.getCliente().getNombre() + "\t- Total: " + v.getTotalVenta() + "€");
-
             v.mostrarTicket();
         }
     }
 
-
     /**
-     * Función para listar las ventas por cliente
-     * @param sc Scanner para introducir datos
+     * Función para listar el total de ventas ACUMULADO de cada cliente
      */
-    public static void mostrarVentasPorCliente(Scanner sc) {
-        System.out.println("\n--- LISTAR VENTAS POR CLIENTE ---");
+    public static void mostrarVentasPorCliente() {
+        System.out.println("\n--- TOTAL DE VENTAS POR CLIENTE:");
 
         if (Main.ventas.isEmpty()) {
-            System.out.println("No hay ventas registradas en el sistema.");
+            System.out.println("\n* * * No se han realizado ventas * * *");
             return;
         }
 
-        Cliente clienteBuscado = GestionCliente.seleccionarCliente(Main.clientes, sc);
-        if (clienteBuscado == null) {
-            System.out.println("No se pudo seleccionar un cliente válido.");
-            return;
-        }
+        ArrayList<String> clientesProcesados = new ArrayList<>(); //creo lista para saber los clientes procesados
 
-        System.out.println("\n--- Ventas para el Cliente: " + clienteBuscado.getNombre() + " (DNI: " + clienteBuscado.getDni() + ") ---");
-        boolean ventasEncontradas = false;
-        int contadorVentas = 0;
+        for (Cliente cliente : Main.clientes) {
+            String dniCliente = cliente.getDni();
 
-        for (Venta venta : Main.ventas) {
-
-            if (venta.getCliente().getDni().equalsIgnoreCase(clienteBuscado.getDni())) {
-                ventasEncontradas = true;
-                contadorVentas++;
-                System.out.println();
-                venta.mostrarTicket();
+            if (clientesProcesados.contains(dniCliente)) { //si el cliente ha sido procesado -> lo salta
+                continue;
             }
-        }
 
-        if (!ventasEncontradas) {
-            System.out.println("No se encontraron ventas para el cliente " + clienteBuscado.getNombre() + ".");
+            double totalAcumulado = 0.0;
+            boolean tieneVentas = false;
+
+            //recorre TODAS las ventas para encontrar las del cliente actual
+            for (Venta venta : Main.ventas) {
+                if (venta.getCliente().getDni().equalsIgnoreCase(dniCliente)) {
+                    totalAcumulado += venta.getTotalVenta();
+                    tieneVentas = true;
+                }
+            }
+
+            // si el cliente tiene ventas -> imprime el total
+            if (tieneVentas) {
+                System.out.printf("\t- Cliente: %s \t|\tTotal acumulado: %.2f €\n", cliente.getNombre(), totalAcumulado);
+            } else {
+                System.out.printf("\t- Cliente: %s \t|\tTotal acumulad: 0.00 €\n", cliente.getNombre());
+            }
+
+            clientesProcesados.add(dniCliente); // añadp el DNI a la lista de procesados para no duplicar clientes
         }
     }
 
@@ -120,16 +140,16 @@ public class GestionVenta {
      * Ejemplo Muestra: Venta 1: 19,99€
      */
     public static void listarVentasSoloImporte(){
-        System.out.println("\n--- LISTADO DE TODAS LAS VENTAS ---");
+        System.out.println("\n--- LISTADO VENTAS CON SU IMPORTE TOTAL:");
         if (Main.ventas.isEmpty()) {
-            System.out.println("No hay ventas registradas aún.");
+            System.out.println("\n* * * No se han realizado ventas * * *");
             return;
         }
         for (int i = 0; i < Main.ventas.size(); i++) {
             Venta v = Main.ventas.get(i);
-            System.out.printf("\nVenta " + (i + 1) + ": " + "\t- Total: %.2f € ", v.getTotalVenta() );
+            System.out.printf("\n\t- Venta " + (i + 1) + ": %.2f € ", v.getTotalVenta() );
         }
-        System.out.println("------------------------------------\n");
+        System.out.println();
     }
 
 }
