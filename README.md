@@ -65,7 +65,13 @@ Una vez que el proyecto ha sido compilado (siguiendo las instrucciones en la sec
 ```
 ├── docs/                                 # Documentación generada con JavaDoc
 ├── src/
-│   ├── main/java/                        # Código fuente
-│   └── test/java/                        # Tests con JUnit
+│   ├── main                              # Código fuente
+│   ├── Cliente
+│   ├── GestionCliente
+│   ├── GestionProducto
+│   ├── GestionVenta
+│   ├── Producto
+│   ├── Venta                          
+├── test                                  # Tests con JUnit
 ├── pom.xml                               # Configuración de Maven
 └── README.md
