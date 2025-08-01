@@ -3,111 +3,122 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Scanner;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GestionProductoTest {
 
-    private final InputStream originalSystemIn = System.in;
+    private final InputStream systemIn = System.in;
 
     /**
-     * Limpia las listas estáticas y reinicia el Scanner antes de cada test
+     * Prepara el entorno antes de cada test y limpia el mapa de productos
      */
     @BeforeEach
     void setUp() {
-        Main.clientes = new ArrayList<>();
-        Main.productos = new ArrayList<>();
-        Main.ventas = new ArrayList<>();
-        Main.sc = new Scanner(System.in);
+        Main.productosConStock = new HashMap<>();
     }
 
     /**
-     * Restaura System.in después de cada test
+     * Restaura los valores originales después de cada test
      */
     @AfterEach
     void tearDown() {
-        System.setIn(originalSystemIn);
+        System.setIn(systemIn);
+        if (Main.sc != null) {
+            Main.sc.close();
+        }
     }
 
 
+    //---TEST DE FUNCIONES:
     /**
-     * Test para altaProducto()
-     *  1. Simular la entrada de un nuevo producto
-     *  2. Verificar qeu el producto se ha añadido y que sus datos son correctos
+     * Test para altaProducto() - Añadir un producto nuevo
+     *  1. Simular la entrada de un producto nuevo
+     *  2. Verificar que el mapa de productos tiene un elemento
+     *  3. Comprobar que los datos del producto son correctos
      */
     @Test
-    void testAltaProducto() {
+    public void testAltaProducto_NuevoProducto() {
         // 1
-        String testInput = "Tarta chocolate\nChocolate\n5,50\n";
+        String testInput = "Bizcocho\nVainilla\n7,50\n3\n";
         System.setIn(new ByteArrayInputStream(testInput.getBytes()));
         Main.sc = new Scanner(System.in);
 
         GestionProducto.altaProducto();
 
         // 2
-        assertEquals(1, Main.productos.size(), "Debería haber un producto en la lista");
-        Producto p = Main.productos.get(0);
-        assertEquals("Tarta chocolate", p.getTipoBollo());
-        assertEquals("Chocolate", p.getSabor());
-        assertEquals(5.50, p.getPrecio(), 0.001);
-    }
-
-
-    /**
-     * Test para buscarProductoPorSabor() - SABOR SI ENCONTRADO
-     *  1. Añadir productos de prueba
-     *  2. Ejecutar el método con un sabor existente
-     *  3. Verificar que se encontró un producto y que es el correcto
-     */
-    @Test
-    void testBuscarProductoPorSabor_Encontrado() {
-        // 1
-        Main.productos.add(new Producto("Galleta", "Mantequilla", 1.20));
-        Main.productos.add(new Producto("Tarta", "Fresa", 12.99));
-
-        // 2
-        List<Producto> productosEncontrados = GestionProducto.buscarProductoPorSabor("Fresa");
+        assertEquals(1, Main.productosConStock.size(), "Debería haber un producto en el mapa");
 
         // 3
-        assertFalse(productosEncontrados.isEmpty(), "Debe encontrar al menos un producto");
-        assertEquals(1, productosEncontrados.size());
-        assertEquals("Tarta", productosEncontrados.get(0).getTipoBollo());
+        ProductoStock ps = Main.productosConStock.get("bizcocho-vainilla");
+        assertNotNull(ps, "El producto no debería ser nulo");
+        assertEquals("Bizcocho", ps.getProducto().getTipoBollo());
+        assertEquals("Vainilla", ps.getProducto().getSabor());
+        assertEquals(7.50, ps.getProducto().getPrecio());
+        assertEquals(3, ps.getStock());
     }
 
     /**
-     * Test para buscarProductoPorSabor() - SABOR NO ENCONTRADO
-     *  1. Añadir productos de prueba
-     *  2. Ejecutar el método con un sabor que NO existe
-     *  3. Verificar que NO se encontró ningún producto
+     * Test para altaProducto() -Añadir un producto existente (se suma el stock introducido)
+     *  1. Añadir un producto inicial con 3 unidades
+     *  2. Simular la entrada para añadir 10 unidades más al mismo producto
+     *  3. Comprobar que el stock total es 13
      */
     @Test
-    void testBuscarProductoPorSabor_NoEncontrado() {
+    public void testAltaProducto_ActualizaStock() {
         // 1
-        Main.productos.add(new Producto("Galleta", "Mantequilla", 1.20));
+        Main.productosConStock.put("donut-chocolate", new ProductoStock(new Producto("Donut", "Chocolate", 1.50), 3));
 
         // 2
-        List<Producto> productosEncontrados = GestionProducto.buscarProductoPorSabor("Limón");
+        String testInput = "Donut\nChocolate\n1,50\n10\n";
+        System.setIn(new ByteArrayInputStream(testInput.getBytes()));
+        Main.sc = new Scanner(System.in);
+
+        GestionProducto.altaProducto();
 
         // 3
-        assertTrue(productosEncontrados.isEmpty(), "No debería encontrar productos con ese sabor");
+        assertEquals(1, Main.productosConStock.size(), "No debería haber añadido un nuevo producto, solo actualizar el stock");
+        ProductoStock ps = Main.productosConStock.get("donut-chocolate");
+        assertEquals(13, ps.getStock(), "El stock total debería ser 13");
     }
 
-
     /**
-     * Test para listarProducto()
-     *  1. Añadir productos de prueba
-     *  2. Comprobar que el método se ejecuta sin errores
+     * Test para buscarProductoPorSabor() -> se encuentran productos
+     *  1. Añadir varios productos
+     *  2. Buscar productos por un sabor
+     *  3. Comprobar que la lista de resultados no está vacía y que su tamaño es correcto
      */
     @Test
-    void testListarProducto() {
+    public void testBuscarProductoPorSabor_Encontrado() {
         // 1
-        Main.productos.add(new Producto("Galleta", "Mantequilla", 1.20));
-        Main.productos.add(new Producto("Tarta", "Fresa", 12.99));
+        Main.productosConStock.put("donut-chocolate", new ProductoStock(new Producto("Donut", "Chocolate", 1.50), 10));
+        Main.productosConStock.put("galleta-chocolate", new ProductoStock(new Producto("Galleta", "Chocolate", 1.20), 5));
+        Main.productosConStock.put("tarta-fresa", new ProductoStock(new Producto("Tarta", "Fresa", 12.99), 3));
 
         // 2
-        assertDoesNotThrow(() -> GestionProducto.listarProducto());
-        assertEquals(2, Main.productos.size(), "La lista debería tener 2 productos");
+        var productosEncontrados = GestionProducto.buscarProductoPorSabor("chocolate");
+
+        // 3
+        assertFalse(productosEncontrados.isEmpty(), "La lista de productos no debería estar vacía");
+        assertEquals(2, productosEncontrados.size(), "Debería haber 2 productos con sabor a chocolate");
+    }
+
+    /**
+     * Test para buscarProductoPorSabor() -> NO se encuentran productos
+     * 1. Añadir productos al mapa
+     * 2. Buscar productos por un sabor que NO existe
+     * 3. Verificar que la lista de resultados está vacía
+     */
+    @Test
+    public void testBuscarProductoPorSabor_NoEncontrado() {
+        // 1
+        Main.productosConStock.put("donut-chocolate", new ProductoStock(new Producto("Donut", "Chocolate", 1.50), 10));
+
+        // 2
+        var productosEncontrados = GestionProducto.buscarProductoPorSabor("vainilla");
+
+        // 3
+        assertTrue(productosEncontrados.isEmpty(), "La lista de productos debería estar vacía");
     }
 }
