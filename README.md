@@ -49,7 +49,7 @@ Una vez que el proyecto ha sido compilado (siguiendo las instrucciones en la sec
 - **Autor:** Joanne Zamorano Berrocal.
 - **Proyecto Módulos:** DAM: Programación y Entornos de Desarrollo.
 - **Año:** 2025
-    - **Version 1.0** Julio - Agosto 2025
+    - **Version 1.0** 2025
 - **Licencia:** Este proyecto tiene fines educativos, creado para practicar los conceptos aprendidos hasta este momento en el curso. 
 
 ## Documentación, pruebas y control de versiones
